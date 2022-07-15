@@ -6,38 +6,50 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        bool oneLoop;
+        public static PlayerController instance;
         int randomWayPoint;
-        int randomWayPoint2;
+        int randomWingSize;
         Vector3 GetWayPoint;
         [SerializeField] Transform waypoints;
+        public Transform center;
         [SerializeField] Transform InstantiatedWings;
+        public Transform PickedWings;
+
+        private void Awake()
+        {
+            if (instance==null)
+            {
+                instance = this;
+            }
+        }
+
         private void FixedUpdate()
         {
             randomWayPoint = Random.Range(0, 7);
-            randomWayPoint2 = Random.Range(0, 29);
+            randomWingSize = Random.Range(0, 29);
             GetWayPoint = waypoints.GetChild(randomWayPoint).transform.position;
 
             if (InstantiatedWings.childCount>29)
             {
-                InstantiatedWings.GetChild(randomWayPoint2).transform.position = GetWayPoint;
+                InstantiatedWings.GetChild(randomWingSize).transform.position = GetWayPoint;
             }
-
+           
         }
 
 
         private void Start()
         {
-
+            //this.transform.parent = PickedWings;
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out IInteract interactable))
             {
                 interactable.Interact();
-                //PickedWings.Add(other.transform);
+                other.transform.parent=PickedWings;
                 //We get new wing instead of picked wing from pool.
                 PoolingManager.instance.SpawnFromPool("WingGen", transform.position - new Vector3(0f, 0f, 3f), Quaternion.Euler(0, 0, 0));
+
             }
         }
 

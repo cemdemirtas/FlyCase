@@ -26,13 +26,24 @@ namespace Objects
         {
             // Simple fix for the child-parent-parent position relationship.
             //transform.localPosition = new Vector3(_playerTransform.position.x * -1, 0, 0);
-            transform.localPosition = new Vector3(0, 0, _playerTransform.position.z * -1);
+            //transform.localPosition = new Vector3(0, 0, _playerTransform.position.z * -1);
         }
 
         private void FixedUpdate()
         {
-            transform.localPosition = new Vector3(0, 0, _playerTransform.localPosition.z * -1);
+            //PlayerController.instance.PickedWings.localPosition = new Vector3(PlayerController.instance.PickedWings.position.x,
+            //    PlayerController.instance.PickedWings.position.y,
+            //    _playerTransform.localPosition.z * -1);
             WaveNodes();
+
+            PlayerController.instance.PickedWings.localPosition = new Vector3(PlayerController.instance.transform.localPosition.x - 2f,
+                PlayerController.instance.PickedWings.localPosition.y,
+                PlayerController.instance.PickedWings.localPosition.z);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PlayerController.instance.PickedWings.position = PlayerController.instance.center.localPosition;
+            }
         }
 
         private void WaveNodes()
@@ -42,8 +53,8 @@ namespace Objects
                 Vector3 nodePosition = _stackList[i].localPosition;
                 Vector3 previousNodePosition = _stackList[i - 1].localPosition;
                 nodePosition = new Vector3(
-                    i * _spaceBetweenNodes,
-                                           _stackParent.position.y, //Stack parent's heigh(wing)
+                      i * _spaceBetweenNodes,
+                                           PlayerController.instance.PickedWings.localPosition.y, //Stack parent's heigh(wing)
                                            _playerTransform.localPosition.z
                                           );
 
