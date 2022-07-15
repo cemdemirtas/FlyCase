@@ -20,6 +20,8 @@ namespace Objects
             _stackList.Add(_playerTransform);
 
             Collect.OnInteract += UpdateStack; // add event
+
+          
         }
 
         private void Update()
@@ -29,6 +31,7 @@ namespace Objects
             //transform.localPosition = new Vector3(0, 0, _playerTransform.position.z * -1);
         }
 
+
         private void FixedUpdate()
         {
             //PlayerController.instance.PickedWings.localPosition = new Vector3(PlayerController.instance.PickedWings.position.x,
@@ -36,14 +39,9 @@ namespace Objects
             //    _playerTransform.localPosition.z * -1);
             WaveNodes();
 
-            PlayerController.instance.PickedWings.localPosition = new Vector3(PlayerController.instance.transform.localPosition.x - 2f,
+                PlayerController.instance.PickedWings.localPosition = new Vector3(PlayerController.instance.transform.localPosition.x - 2f,
                 PlayerController.instance.PickedWings.localPosition.y,
                 PlayerController.instance.PickedWings.localPosition.z);
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                PlayerController.instance.PickedWings.position = PlayerController.instance.center.localPosition;
-            }
         }
 
         private void WaveNodes()
@@ -61,6 +59,9 @@ namespace Objects
 
                 _stackList[i].localPosition = nodePosition;
             }
+
+
+
         }
 
         private void UpdateStack(bool isPickedUp, Transform node) // action assing 2 paramater

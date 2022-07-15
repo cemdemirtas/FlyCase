@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
     }
     private void Update()
     {
-        // swerveSpeed=0.25f;
-        //setZSpeed=3;
+        // swerveSpeed=2f;
+        //setZSpeed=50;
     }
 }
